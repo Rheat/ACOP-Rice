@@ -1,21 +1,7 @@
-# AquaCrop-OSPy
-> Crop-water model based on AquaCrop-OS
+# ACOP-Rice
+> A modified version of the AquaCrop-OSPy specific to rice simulation
 
 
-AquaCrop-OSPy is a python implementation of the popular crop-water model AquaCrop, built from the AquaCrop-OS source code.
-
-AquaCrop-OS, an open source version of FAO’s multi-crop model, was released in August 2016 and is the result of collaboration between researchers at the University of Manchester, Water for Food Global Institute, U.N. Food and Agriculture Organization, and Imperial College London.
-
-AquaCrop-OSPy has been designed in way that users can conduct cutting edge research with only basic python experience. In particular for the design and testing of irrigation stratgeies.
-
-Open access journal article <a href=https://doi.org/10.1016/j.agwat.2021.106976> here </a>
-
-It is built upon the AquaCropOS crop-growth model written in Matlab (<a href=https://doi.org/10.1016/j.agwat.2016.11.015> paper </a>,  <a href=https://www.aquacropos.com/> webpage </a>) which itself itself is based on the FAO AquaCrop model <a href=http://www.fao.org/aquacrop/en/>Webpage </a>. Comparisons to both base models are shown <a href=https://aquacropos.github.io/aquacrop/comparison.html> here. </a>
-
-
-A <a href=https://forum.aquacroposforum.com/>forum </a> has also been created so that users of AquaCrop-OSPy and AquaCrop-OS can discuss research, bugs and future development. 
-
-There is also an extensive <a href=https://aquacropos.github.io/aquacrop/>documentation </a> for the model
 
 ## Install
 
