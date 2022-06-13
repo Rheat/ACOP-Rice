@@ -3,7 +3,7 @@
 > 
 > There are two main modification.
 > 1. Adding a new irrigation method specific to paddy rice.
->   IrrMethod=6: Irrigation is triggered if water depth drops below a specified threshold (or several thresholds representing different major crop growth stages).
+>     IrrMethod=6: Irrigation is triggered if water depth drops below a specified threshold (or several thresholds representing different major crop growth stages).
 > 2. Making the height of bunds changeable.
 
 
