@@ -933,6 +933,8 @@ class IrrMngtClass:
     `NetIrrSMT` : `float` : Net irrigation threshold moisture level (% of TAW that will be maintained, for IrrMethod=4)
 
     `Depth` : `float` : constant depth to apply on each day
+    
+    'TDcriteria' : 'pandas.DataFrame' : DataFrame containing time and depth criteria
 
     """
 
@@ -946,6 +948,7 @@ class IrrMngtClass:
         self.SMT = np.zeros(4)
         self.IrrInterval = 0
         self.Schedule = []
+        self.TDcriteria=np.zeros((1,3))
         self.NetIrrSMT = 80.0
         self.depth = 0.0
 
@@ -970,7 +973,17 @@ class IrrMngtClass:
 
         if IrrMethod == 5:
             self.depth = 0
-
+        if IrrMethod == 6:
+            #wants a pandas dataframe with Day after plant,Minimum and Depth, pd.Datetime and float
+            self.MaxIrr = 150.
+            '''
+            T_Criteria = [1,8,62,72]
+            Minimum=[10,20,10,0]
+            depths = [20,30,40,0]          
+            self.TDcriteria =pd.DataFrame([T_Criteria,Minimum,depths]).T
+            self.TDcriteria.columns=['T_Criteria','Minimum','Depth']
+            '''
+        
         allowed_keys = {
             "name",
             "WetSurf",
@@ -982,6 +995,7 @@ class IrrMngtClass:
             "NetIrrSMT",
             "Schedule",
             "depth",
+            "TDcriteria",
         }
 
         self.__dict__.update((k, v) for k, v in kwargs.items() if k in allowed_keys)
@@ -999,6 +1013,7 @@ spec = [
     ("Schedule", float64[:]),
     ("NetIrrSMT", float64),
     ("depth", float64),
+    ('TDcriteria', float64[:,:]),
 ]
 
 
@@ -1022,7 +1037,7 @@ class IrrMngtStruct:
         self.Schedule = np.zeros(sim_len)
         self.NetIrrSMT = 80.0
         self.depth = 0.0
-
+        self.TDcriteria=np.zeros((cri_len,3))
 
 # Cell
 class FieldMngtClass:
@@ -1046,7 +1061,7 @@ class FieldMngtClass:
 
     `fMulch` : `float` : Soil evaporation adjustment factor due to effect of mulches
 
-    `zBund` : `float` : Bund height (m)
+    `zBund` : `pandas.DataFrame` : DataFrame containing dates and Bund height(m)
 
     `BundWater` : `float` : Initial water height in surface bunds (mm)
 
@@ -1074,7 +1089,7 @@ class FieldMngtClass:
 
         self.MulchPct = MulchPct  #  Area of soil surface covered by mulches (%)
         self.fMulch = fMulch  # Soil evaporation adjustment factor due to effect of mulches
-        self.zBund = zBund  # Bund height (m)
+        self.zBund = np.array(zBund) # Bund height (m)
         self.BundWater = BundWater  # Initial water height in surface bunds (mm)
         self.CNadjPct = CNadjPct  # Percentage change in curve number (positive or negative)
 
@@ -1087,7 +1102,7 @@ spec = [
     ("SRinhb", boolean),
     ("MulchPct", float64),
     ("fMulch", float64),
-    ("zBund", float64),
+    ("zBund", float64[:,:]),
     ("BundWater", float64),
     ("CNadjPct", float64),
 ]
@@ -1109,7 +1124,7 @@ class FieldMngtStruct:
 
         self.MulchPct = 0.0
         self.fMulch = 0.0
-        self.zBund = 0.0
+        self.zBund = np.zeros((2,1))
         self.BundWater = 0.0
         self.CNadjPct = 0.0
 
