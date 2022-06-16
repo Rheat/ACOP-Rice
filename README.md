@@ -4,8 +4,10 @@
 > There are two main modification.
 > 1. Adding a new irrigation method specific to paddy rice.
 >     IrrMethod=6: Irrigation is triggered if water depth drops below a specified threshold (or several thresholds representing different major crop growth stages).
+>     'TDcriteria' : 'pandas.DataFrame' : DataFrame containing time and depth criteria
 > 2. Making the height of bunds changeable.
-
+>     `zBund` : `pandas.DataFrame` : DataFrame containing dates and Bund height(m)
+    
 
 ## Install
 
