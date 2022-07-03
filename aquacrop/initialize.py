@@ -302,19 +302,23 @@ def read_irrigation_management(ParamStruct, IrrMngt, ClockStruct):
 
         IrrMngt.Schedule = np.array(df.values, dtype=float).flatten()
 
+    elif IrrMngt.IrrMethod == 6:
+        df=IrrMngt.TDcriteria.copy()
+        IrrMngt.TDcriteria=np.array(df.values,dtype=float)
     else:
 
         IrrMngt.Schedule = np.zeros(len(ClockStruct.TimeSpan))
+        IrrMngt.TDcriteria=np.zeros((1,3))
 
     IrrMngt.SMT = np.array(IrrMngt.SMT, dtype=float)
 
-    irr_mngt_struct = IrrMngtStruct(len(ClockStruct.TimeSpan))
+    irr_mngt_struct = IrrMngtStruct(len(ClockStruct.TimeSpan),len(IrrMngt.TDcriteria))
     for a, v in IrrMngt.__dict__.items():
         if hasattr(irr_mngt_struct, a):
             irr_mngt_struct.__setattr__(a, v)
 
     ParamStruct.IrrMngt = irr_mngt_struct
-    ParamStruct.FallowIrrMngt = IrrMngtStruct(len(ClockStruct.TimeSpan))
+    ParamStruct.FallowIrrMngt = IrrMngtStruct(len(ClockStruct.TimeSpan),len(IrrMngt.TDcriteria))
 
     return ParamStruct
 
@@ -1041,8 +1045,8 @@ def read_model_initial_conditions(ParamStruct, ClockStruct, InitWC):
         ):
             # Get initial storage between surface bunds
             InitCond.SurfaceStorage = float(ParamStruct.FallowFieldMngt.BundWater)
-            if InitCond.SurfaceStorage > float(ParamStruct.FallowFieldMngt.zBund):
-                InitCond.SurfaceStorage = float(ParamStruct.FallowFieldMngt.zBund)
+            if InitCond.SurfaceStorage > float(ParamStruct.FallowFieldMngt.zBund)*1000:
+                InitCond.SurfaceStorage = float(ParamStruct.FallowFieldMngt.zBund)*1000
         else:
             # No surface bunds
             InitCond.SurfaceStorage = 0
@@ -1054,8 +1058,8 @@ def read_model_initial_conditions(ParamStruct, ClockStruct, InitWC):
         if (FieldMngtTmp.Bunds) and (float(FieldMngtTmp.zBund) > 0.001):
             # Get initial storage between surface bunds
             InitCond.SurfaceStorage = float(FieldMngtTmp.BundWater)
-            if InitCond.SurfaceStorage > float(FieldMngtTmp.zBund):
-                InitCond.SurfaceStorage = float(FieldMngtTmp.zBund)
+            if InitCond.SurfaceStorage > float(FieldMngtTmp.zBund)*1000:
+                InitCond.SurfaceStorage = float(FieldMngtTmp.zBund)*1000
         else:
             # No surface bunds
             InitCond.SurfaceStorage = 0
